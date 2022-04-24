@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.css"></link>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+</head>
+<body>
+    <div>
+        <form id="notice_form">
+            <input type="text" name="title" placeholder="제목"/>
+            <input type="hidden" name="content" id="content" value=""/>
+            <input type="file" name="files" multiple="multiple"/>
+        </form>
+    </div>
+    <a href = "javascript:fnSave();">글 저장</a>
+    <div id="editor"></div>
+    <script>
+        const editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            previewStyle: 'vertical',
+            height: '500px'
+        });
+
+        function fnSave(){
+            document.getElementById('content').value = editor.getHTML();
+            let noticeForm = document.getElementById('notice_form');
+            noticeForm.method = 'POST';
+            noticeForm.action = '/notice/edit';
+            noticeForm.enctype = 'multipart/form-data';
+            noticeForm.submit();
+        }
+    </script>
+</body>
+</html>
